@@ -22,11 +22,14 @@ and what you should write is the sayHi function that makes the code above work,
 
 // 1. Write a function called first that returns the first item of the array using a callback function
 
-  // Code Here
+// Code Here
+var first = function (names, cb) {
+  var firstName = names.shift();
+  cb(firstName);
+}
 
-  
 var names = ['Tyler', 'Cahlan', 'Ryan', 'Colt', 'Tyler', 'Blaine', 'Cahlan'];
-first(names, function(firstName){
+first(names, function (firstName) {
   console.log('The first name in names is ' + firstName)
 });
 
@@ -34,9 +37,12 @@ first(names, function(firstName){
 
 // 2. Write a function called last which returns the last item of the array using a callback function.
 
-  //Code Here
-
-last(names, function(lastName){
+//Code Here
+var last = function (names, cb) {
+  var lastName = names.pop();
+  cb(lastName);
+}
+last(names, function (lastName) {
   console.log('The last name in names is ' + lastName);
 });
 
@@ -44,10 +50,13 @@ last(names, function(lastName){
 
 // 3. Write a function called multiply that multiplies two numbers using a callback function.
 
-  //Code Here
+//Code Here
+var multiply = function (num1, num2, cb) {
+  var answer = num1 * num2;
+  cb(answer);
+}
 
-
-multiply(4, 3, function(answer){
+multiply(4, 3, function (answer) {
   console.log('The answer is ' + answer); //should console.log 12
 })
 
@@ -56,10 +65,23 @@ multiply(4, 3, function(answer){
 // 4. Write a function called contains that checks if a name exists in an array. 
 // If it does, return true using the callback, if not return false.
 
-  //Code Here 
+//Code Here 
+var contains = function (list, newName, cb) {
+  var result;
+  for (var i = 0; i < list.length; i++) {
+    if (list[i] === newName) {
+      result = true;
+    }
+    else {
+      result = false;
+    }
+    cb(result);
+  }
 
-contains(names, 'Colt', function(result){
-  if(result === true){
+}
+
+contains(names, 'Colt', function (result) {
+  if (result === true) {
     console.log('Colt is in the array');
   } else {
     console.log('Colt is not in the array');
@@ -71,9 +93,19 @@ contains(names, 'Colt', function(result){
 // 5. Write a function called uniq that takes the names array and removes all duplicates and returns 
 // the callback function with the array of unique names.
 
-    //Code Here
+//Code Here
 
-uniq(names, function(uniqArr){
+var uniq = function (list, cb) {
+  var uniqArr = [];
+  for (var i = 0; i < list.length; i++) {
+    if (uniqArr.indexOf(list[i]) === -1) {
+      uniqArr.push(list[i]);
+    }
+  }
+  cb(uniqArr);
+}
+
+uniq(names, function (uniqArr) {
   console.log('The new names array with all the duplicate items removed is ', uniqArr);
 });
 
@@ -81,9 +113,20 @@ uniq(names, function(uniqArr){
 // 6. Write a function called each that takes in an array of names. For each item, use a callback 
 // function to return the indices and item.
 
-    //Code Here 
+//Code Here 
+function each(name, cb) {
 
-each(names, function(item, indice){
+  for (var i = 0; i < name.length; i++) {
+    var indice = i;
+    var item = name[i];
+
+    cb(item, indice);
+  }
+
+}
+
+
+each(names, function (item, indice) {
   console.log('The item in the ' + indice + ' position is ' + item)
 });
 
@@ -92,7 +135,17 @@ each(names, function(item, indice){
 // 7. Write a function called getUserById that looks at the array of user objects (users) and searches for a user by ID 
 // and returns that user.
 
- //Code Here
+//Code Here
+function getUserById(users, num, cb) {
+  for (var i = 0; i < users.length; i++) {
+    if (users[i].id === num) {
+      var user = users[i];
+      cb(user);
+    }
+
+  }
+}
+
 
 var users = [
   {
@@ -115,6 +168,6 @@ var users = [
   },
 ];
 
-getUserById(users, '16t', function(user){
-  console.log('The user with the id 16t has the email of ' + user.email + ' the name of ' + user.name + ' and the address of ' + user.address); 
+getUserById(users, '16t', function (user) {
+  console.log('The user with the id 16t has the email of ' + user.email + ' the name of ' + user.name + ' and the address of ' + user.address);
 });
